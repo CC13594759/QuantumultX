@@ -1,0 +1,36 @@
+#dou yin
+host-suffix, amemv.com, 抖音
+host-suffix, zijieapi.com, 抖音
+host-suffix, bgm.tv, direct
+host-suffix, zjcdn.com, direct
+host-suffix, douyincdn.com, direct
+host-suffix, douyinpic.com,direct
+host-suffix, douyinstatic.com,direct
+host-suffix, douyinvod.com, direct
+host-suffix, idouyinvod.com,direct
+host-suffix, ixigua.com,direct
+host-suffix, ixiguavideo.com,direct
+host-suffix, pstatp.com,direct
+host-suffix, toutiao.com,direct
+
+#hong guo
+host-wildcard, *ad.zijie*, reject
+host-wildcard, *reading-ad*, reject
+host-wildcard, *lf.zijie*, reject
+host-wildcard, *-ad-sign*, reject
+host-wildcard, *lf.ecombdapi.com, reject
+host-wildcard, *byteimg.com, reject
+host-wildcard, *lf.fqnovel.com, reject
+
+#fan qie
+host-wildcard, *mon.toutiaocloud.*, reject
+host-wildcard, *sourcecdn.bytegecko.com, reject
+host-wildcard, *webcast-sign.douyinpic.com, reject
+host-wildcard, *applog.fqnovel.com, reject
+host-wildcard, *misc.fqnovel.com, reject
+host-wildcard, *gecko*zijieapi.com, reject
+host-wildcard, *normal.zijieapi.com, reject
+host-wildcard, *developer.bytemaimg.com, reject
+host-wildcard, *abtest*misc.zijieapi.com, reject
+host-wildcard, *lq.fqnovel.com,reject
+host-wildcard, *snssdk.com,reject
