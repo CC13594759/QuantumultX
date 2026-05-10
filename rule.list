@@ -4,15 +4,6 @@ host-suffix, zijieapi.com, 抖音
 host-suffix, bgm.tv, direct
 host-suffix, zjcdn.com, direct
 
-#hong guo
-host-wildcard, *ad.zijie*, reject
-host-wildcard, *reading-ad*, reject
-host-wildcard, *lf.zijie*, reject
-host-wildcard, *-ad-sign*, reject
-host-wildcard, *lf.ecombdapi.com, reject
-host-wildcard, *byteimg.com, reject
-host-wildcard, *lf.fqnovel.com, reject
-
 #fan qie
 host-wildcard, *sourcecdn.bytegecko.com, reject
 host-wildcard, *developer.bytemaimg.com, reject
