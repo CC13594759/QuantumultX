@@ -357,9 +357,15 @@ host-suffix, wpadmngr.com, reject
 host-suffix, www.sgfsdvc.com, reject
 host-suffix, wxcjgg.cn, reject
 host-suffix, wxs.qq.com, reject
+host-suffix, badjs.weixinbridge.com, reject
 host-suffix, xcultur.com, reject
 host-suffix, xhvideo.sacdnssedge.com, reject
 host-suffix, xpis-xcdn.youku.com, reject
 host-suffix, yunxish.com, reject
 host-suffix, zhanzhang.toutiao.com, reject
 host-suffix, zz.bdstatic.com, reject
+host-suffix, ads.95516.com, reject
+host-suffix, switch.cup.com.cn, reject
+
+
+
