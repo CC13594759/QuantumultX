@@ -52,7 +52,7 @@ function generateHtmlMessage(data) {
     if (data.region) location += ` - ${data.region}`;
     if (data.city) location += ` - ${data.city}`;
 
-    const typeStr = data.isResidential ? "住宅网络 🏠" : "数据中心 🏢";
+    const typeStr = data.isResidential ? "家庭宽带 🏠" : "数据中心 🏢";
     
     const score = data.fraudScore || 0;
     const riskInfo = getRiskLevel(score);
