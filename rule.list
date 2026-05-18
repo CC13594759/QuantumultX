@@ -5,7 +5,6 @@ host-suffix, bgm.tv, direct
 host-suffix, douyincdn.com, direct
 host-suffix, zjcdn.com, direct
 
-
 # 番茄小说去广告
 host-wildcard, *sourcecdn.bytegecko.com, reject
 host-wildcard, *developer.bytemaimg.com, reject
@@ -119,8 +118,6 @@ host-suffix, cdn.bncloudfl.com, reject
 host-suffix, cdn.pncloudfl.com, reject
 host-suffix, cdn.camvenue.live, reject
 host-suffix, engine.camvenue.live, reject
-host-suffix, cdngslb.com,DIRECT
-host-suffix, cdnbuild.net,DIRECT
 host-suffix, cdn.confiant-integrations.net, reject
 host-suffix, cdn.optimizely.com, reject
 host-suffix, cdn.optmn.cloud, reject
