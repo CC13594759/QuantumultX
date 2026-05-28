@@ -41,7 +41,7 @@ var body = $response.body;
 var obj = JSON.parse(body);
 
 var title = flags.get(obj['countryCode']) + ' ' + obj['country']
-var subtitle = obj['regionName'] + ' ' + obj['city'] + ' ' + obj['query'];
+var subtitle = obj['regionName'] + ' ' + obj['city'] + ' ' + obj['timezone'];
 
 var ip = obj['query'];
 var description = '\n';
