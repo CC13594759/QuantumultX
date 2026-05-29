@@ -9,8 +9,9 @@ host-wildcard, *sourcecdn.bytegecko.com, reject
 host-wildcard, *developer.bytemaimg.com, reject
 host-wildcard, *applog.fqnovel.com, reject
 host-wildcard, *misc.fqnovel.com, reject
-host-wildcard, *lq.fqnovel.com,reject
-host-wildcard, *snssdk.com,reject
+host-wildcard, *lq.fqnovel.com, reject
+host-wildcard, *snssdk.com, reject
+host, lf3-reading.fqnovelpic.com, reject
 
 # 红果去广告
 host-wildcard, *ad.zijie*, reject
