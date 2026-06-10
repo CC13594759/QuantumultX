@@ -4,7 +4,7 @@
 [task_local]
 event-interaction https://ddgksf2013.top/scripts/server-info-pure.js, tag=节点详情(Pure), img-url=checkmark.shield.fill.system
   
-@Description: 使用 IPPure API 查询节点详细信息 (IP, ISP, 地区, 风控值, 类型)
+@Description: 使用 IPPure API 查询节点详细信息 (IP, ISP, 地区, 欺诈分数, 类型)
 @Update: 2025-12-14
 ***/
 
@@ -63,7 +63,7 @@ function generateHtmlMessage(data) {
         ["ASN", asn],
         ["位置", location],
         ["类型", typeStr],
-        ["风控值", `${score} %`],
+        ["欺诈分数", `${score} 分`],
         ["风险等级", riskInfo]
     ];
 
