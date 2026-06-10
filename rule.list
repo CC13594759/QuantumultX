@@ -888,5 +888,7 @@ host, zgsdk.zhugeio.com, reject
 host-suffix, zedo.com, reject
 host-suffix, d8.zedo.com, reject
 host-suffix, z1.zedo.com, reject
-
+# 拼多多
+host, sdk.1rtb.net, reject
+host, titan.pinduoduo.com, reject
 
