@@ -391,8 +391,6 @@ host-suffix, tos.pstatp.com, reject
 host-keyword, asiad.byteactivity, reject
 host-keyword, pangolin-sdk-toutiao, reject
 host-keyword, pglstatp-toutiao, reject
-host-suffix, pangolin.snssdk.com, reject
-host-suffix, video-cn.snssdk.com, reject
 host-suffix, getui.com, reject
 host-suffix, getui.net, reject
 host-suffix, gepush.com, reject
@@ -401,10 +399,10 @@ host-suffix, log.aliyuncs.com, reject
 host-suffix, zlsdk.1rtb.net, reject
 host-suffix, cdntips.net, reject
 host-suffix, tfogc.com, reject
-#host-keyword, volc, reject
 host-keyword, umeng, reject
 host-suffix, 1a-1791.com, reject
 host-suffix, rumble.com, reject
+
 # Ad-Stir
 host-suffix, ad-stir.com, reject 
 # Adadapted
