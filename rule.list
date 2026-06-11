@@ -3,6 +3,12 @@ ip-cidr, 192.168.0.0/16, direct
 host-suffix, bgm.tv, direct
 host-suffix, zjcdn.com, direct
 host-suffix, douyincdn.com, direct
+host, dl.kwcdn.com, direct
+host, img-2.kwcdn.com, direct
+host, pfs.file.temu.com, direct
+host, gslb.temu.com, direct
+host, temuchat-api.temu.com, direct
+host, agentseller.temu.com, direct
 
 # 番茄小说去广告
 host-wildcard, *webcast-sign.douyinpic.com, reject
