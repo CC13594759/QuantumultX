@@ -28,6 +28,7 @@ host-wildcard, *misc.fqnovel.com, reject
 host-wildcard, *lq.fqnovel.com, reject
 host-wildcard, *snssdk.com, reject
 host-wildcard, *novelapp.ixigua.com, reject
+host-wildcard, *default.ixigua.com, reject
 host-suffix, zijieapi.com, reject
 host, lf3-reading.fqnovelpic.com, reject
 host, dig.bdurl.net, reject
@@ -36,7 +37,6 @@ host, msync-im1-vip6-std.easemob.com, reject
 host, apd-pcdnwxlogin.teg.tencent-cloud.net, reject
 host, sf3-ttcdn-tos.pstatp.com, reject
 host-suffix, pglstatp-toutiao.com, reject
-host, *default.ixigua.com, reject
 host-suffix, byteorge.com, reject
 host-suffix, bytegoofy.com, reject
 host-suffix, bytedance.com, reject
