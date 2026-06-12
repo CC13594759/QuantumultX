@@ -8,7 +8,12 @@ host, img-2.kwcdn.com, direct
 host, pfs.file.temu.com, direct
 host, gslb.temu.com, direct
 host, temuchat-api.temu.com, direct
-host, agentseller.temu.com, direct
+host, temuchat-file.temu.com, direct
+host, thtk-us.seller.temu.com, direct
+host, agentseller-eu.temu.com, direct
+host, agentseller-us.temu.com, direct
+host-suffix, kuajingmaihuo.com, direct
+host-suffix, agentseller.temu.com, direct
 
 # 番茄小说去广告
 host-wildcard, *webcast-sign.douyinpic.com, reject
