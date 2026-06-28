@@ -40,16 +40,17 @@ var flags = new Map([[ "AC" , "🇦🇨" ] ,["AE","🇦🇪"], [ "AF" , "🇦�
 var body = $response.body;
 var obj = JSON.parse(body);
 
-var title = flags.get(obj['countryCode']) + ' ' + obj['country'] + ' ' + 'StarLink'
+var title = flags.get(obj['countryCode']) + ' ' + obj['country']
 var subtitle = obj['regionName'] + ' ' + obj['city'] + ' ' + obj['query'];
 
 var ip = obj['query'];
 var description = '\n';
-description = description + 'IP: '+ obj['query'] + '\n\n';
-description = description + '服务商: '+ obj['as'] + '\n\n';
-description = description + '国家: '+ obj['country'] + '\n\n';
-description = description + '省份: '+ obj['regionName'] + '\n\n';
-description = description + '城市: '+ City_ValidCheck(obj['city']) + '\n\n';
-description = description + '邮编: '+ obj['zip'] + '\n\n';
-description = description + '时区: '+ obj['timezone'] + '\n\n';
+description = description + 'IP: ' + obj['query'] + '\n\n';
+description = description + '服务商: ' + obj['as'] + '\n\n';
+description = description + '国家: ' + obj['country'] + '\n\n';
+description = description + '省份: ' + obj['regionName'] + '\n\n';
+description = description + '城市: ' + City_ValidCheck(obj['city']) + '\n\n';
+description = description + '邮编: ' + obj['zip'] + '\n\n';
+description = description + '经纬度: ' + obj["lon"] + ',' + obj["lat"] + '\n\n';
+description = description + '时区: ' + obj['timezone'] + '\n\n';
 $done({title, subtitle, ip, description});
