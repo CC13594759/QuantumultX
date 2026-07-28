@@ -120,8 +120,10 @@ async function discoverIP() {
 }
 
 async function collectDatabases(ip, discovery) {
+    if (!ip) throw new Error("出口 IP 为空，无法发起查询");
     const pathIP = encodeURIComponent(ip);
     const tasks = {
+        geoIpApi: requestJson(`${IPAPI_COM_URL}${pathIP}?lang=zh-CN`, { timeout: 5000 }),
         ippure: discovery.ippure
             ? Promise.resolve(discovery.ippure)
             : Promise.reject(new Error(discovery.ippureError || "IPPure 请求失败")),
@@ -259,6 +261,7 @@ function databaseIPMismatch(key, value, expectedIP) {
 function render(ip, data) {
     const types = buildTypes(data);
     const risks = buildRisks(data);
+    const locationInfo = buildLocationInfo(data.geoIpApi, data);
     const titleColor = reportColor(risks);
     const displayNodeName = truncateText(nodeName, 30);
     const displayIP = maskIPAddress(ip);
@@ -268,6 +271,7 @@ function render(ip, data) {
         '<div style="font-size:18px;line-height:18px">&nbsp;</div>',
         `<div style="color:#64D2FF;font-size:16px;margin-bottom:16px">${escapeHtml(displayNodeName)}</div>`,
         `<div style="margin-bottom:16px"><div style="font-size:14px;font-weight:800;line-height:1.15;letter-spacing:0.2px">${escapeHtml(displayIP)}</div></div>`,
+        section("基础信息", locationInfo),
         section("IP 类型属性", renderTypeList(types)),
         section("风险评分", renderRiskList(risks)),
         "</div>",
@@ -279,6 +283,59 @@ function render(ip, data) {
         icon: "shield.lefthalf.filled",
         "title-color": titleColor,
     });
+}
+
+function buildLocationInfo(geoData, data) {
+    // 优先使用 ip-api.com 的中文解析结果
+    if (geoData && geoData.status === "success") {
+        const country = cleanValue(geoData.country);
+        const regionName = cleanValue(geoData.regionName);
+        const city = cleanValue(geoData.city);
+        const isp = cleanValue(geoData.isp) || cleanValue(geoData.org) || cleanValue(geoData.as);
+
+        const locArr = [];
+        if (country) locArr.push(country);
+        if (regionName && regionName !== country) locArr.push(regionName);
+        if (city && city !== regionName) locArr.push(city);
+
+        const locText = locArr.join(" - ") || "未知位置";
+        const ispText = isp || "未知运营商";
+
+        return '<div style="margin-bottom:11px">'
+            + `<div style="font-weight:700"><span style="color:#64D2FF">位置：</span>${escapeHtml(locText)}</div>`
+            + `<div style="margin-top:2px;font-size:12px;line-height:1.5"><span style="color:#64D2FF;font-weight:700">运营商：</span>${escapeHtml(ispText)}</div>`
+            + "</div>";
+    }
+
+    // 备用方案：若 ip-api.com 失败，从 ipinfo / ipapi 中兜底提取
+    const ipinfo = data && data.ipinfo && data.ipinfo.data ? data.ipinfo.data : null;
+    const ipapi = data && data.ipapi ? data.ipapi : null;
+
+    const country = cleanValue(
+        valueAt(ipinfo, "country_name") || 
+        valueAt(ipinfo, "country") || 
+        valueAt(ipapi, "location.country")
+    );
+    const city = cleanValue(valueAt(ipinfo, "city") || valueAt(ipapi, "location.city"));
+    const isp = cleanValue(
+        valueAt(ipinfo, "asn.name") || 
+        valueAt(ipinfo, "org") || 
+        valueAt(ipapi, "company.name") || 
+        valueAt(ipapi, "asn.org")
+    );
+
+    if (country || city || isp) {
+        const locArr = [country, city].filter(Boolean);
+        const locText = locArr.join(" - ") || "未知位置";
+        const ispText = isp || "未知运营商";
+
+        return '<div style="margin-bottom:11px">'
+            + `<div style="font-weight:700"><span style="color:#64D2FF">位置：</span>${escapeHtml(locText)}</div>`
+            + `<div style="margin-top:2px;font-size:12px;line-height:1.5"><span style="color:#64D2FF;font-weight:700">运营商：</span>${escapeHtml(ispText)}</div>`
+            + "</div>";
+    }
+
+    return mutedLine("未能获取位置及运营商信息");
 }
 
 function buildTypes(data) {
@@ -318,22 +375,35 @@ function buildRisks(data) {
         [40, 2, "中风险"],
         [0, 0, "低风险"],
     ]);
-    if (ippureRisk.available && ippureMismatch) {
+    if (ippureRisk && ippureRisk.available && ippureMismatch) {
         ippureRisk.detail = `${ippureRisk.detail} · ${maskIPAddress(data.ippure.ip)}`;
         ippureRisk.affectsReport = false;
     }
 
+    const ipapiRisk = (ipapiMatch && Number.isFinite(ipapiRatio))
+        ? {
+            name: '<span style="color:#64D2FF">ipapi</span>',
+            available: true,
+            severity: ipapiSeverity(ipapiLevel),
+            label: translateRisk(ipapiLevel),
+            detail: `${round(ipapiRatio * 100, 2)}%`,
+        }
+        : null;
+
+    const dbipRiskItem = dbipRisk
+        ? {
+            name: '<span style="color:#64D2FF">DB-IP</span>',
+            available: true,
+            severity: dbipRisk === "high" ? 3 : dbipRisk === "medium" ? 2 : 0,
+            label: dbipRisk === "high" ? "高风险" : dbipRisk === "medium" ? "中风险" : "低风险",
+            detail: dbipRisk,
+        }
+        : null;
+
+    // 仅保留可用（即接口正常返回了有效数据）的项，未返回数据的接口将自动静默隐藏
     return [
         ippureRisk,
-        ipapiMatch && Number.isFinite(ipapiRatio)
-            ? {
-                name: '<span style="color:#64D2FF">ipapi</span>',
-                available: true,
-                severity: ipapiSeverity(ipapiLevel),
-                label: translateRisk(ipapiLevel),
-                detail: `${round(ipapiRatio * 100, 2)}%`,
-            }
-            : unavailableRisk('<span style="color:#64D2FF">ipapi</span>'),
+        ipapiRisk,
         scoreRisk('<span style="color:#64D2FF">IP2Location</span>', ip2Score, [
             [66, 3, "高风险"],
             [33, 2, "中风险"],
@@ -350,16 +420,8 @@ function buildRisks(data) {
             [25, 3, "高风险"],
             [0, 0, "低风险"],
         ]),
-        dbipRisk
-            ? {
-                name: '<span style="color:#64D2FF">DB-IP</span>',
-                available: true,
-                severity: dbipRisk === "high" ? 3 : dbipRisk === "medium" ? 2 : 0,
-                label: dbipRisk === "high" ? "高风险" : dbipRisk === "medium" ? "中风险" : "低风险",
-                detail: dbipRisk,
-            }
-            : unavailableRisk('<span style="color:#64D2FF">DB-IP</span>'),
-    ].filter(Boolean);
+        dbipRiskItem
+    ].filter((item) => item && item.available);
 }
 
 function parseIp2location(html) {
@@ -422,7 +484,7 @@ function parseDbipRisk(html) {
 }
 
 function scoreRisk(name, score, thresholds) {
-    if (score === null) return unavailableRisk(name);
+    if (score === null) return null;
     for (let i = 0; i < thresholds.length; i += 1) {
         if (score >= thresholds[i][0]) {
             return {
@@ -434,11 +496,11 @@ function scoreRisk(name, score, thresholds) {
             };
         }
     }
-    return unavailableRisk(name);
+    return null;
 }
 
 function unavailableRisk(name) {
-    return { name, available: false, severity: 0, label: "", detail: "" };
+    return null;
 }
 
 function ipapiSeverity(level) {
@@ -469,9 +531,9 @@ function typeRow(name, usage) {
 }
 
 function renderRiskList(rows) {
-    const available = rows.filter((row) => row.available);
-    const unavailable = rows.filter((row) => !row.available).map((row) => row.name);
-    const body = available.map((row) => {
+    const available = rows.filter((row) => row && row.available);
+    if (!available.length) return mutedLine("本次没有可验证的风险评分");
+    return available.map((row) => {
         const color = row.severity === null ? "#0A84FF" : riskColor(row.severity);
         return '<div style="margin-bottom:9px">'
             + `<span style="color:${color};font-size:11px">●</span>&nbsp;`
@@ -479,10 +541,6 @@ function renderRiskList(rows) {
             + `<span style="color:${color};font-weight:600">${escapeHtml([row.detail, row.label].filter(Boolean).join(" · "))}</span>`
             + "</div>";
     }).join("");
-    const missing = unavailable.length
-        ? mutedLine(`本次未返回：${unavailable.join("、")}`)
-        : "";
-    return (body || mutedLine("本次没有可验证的风险评分")) + missing;
 }
 
 function renderTypeList(rows) {
@@ -504,7 +562,7 @@ function riskColor(severity) {
 
 function reportColor(rows) {
     const severities = rows.filter((row) => {
-        return row.available && row.severity !== null && row.affectsReport !== false;
+        return row && row.available && row.severity !== null && row.affectsReport !== false;
     })
         .map((row) => row.severity);
     if (!severities.length) return "#8e8e93";
@@ -560,14 +618,14 @@ function request(method, url, options) {
         const backendRequest = String(url).indexOf(IPQUALITY_BACKEND) === 0;
         const configuredPolicy = cleanValue(config.node);
         const policy = configuredPolicy.toUpperCase() === "DIRECT"
-            ? "direct"
+            ? "DIRECT"
             : configuredPolicy || nodeName;
         const requestOptions = {
             url,
             method: String(method || "GET").toUpperCase(),
             headers: config.headers || (backendRequest ? backendHeaders() : browserHeaders()),
             opts: { policy },
-            timeout: config.timeout || 6000 // 默认给 6s 超时防死等
+            timeout: config.timeout || 6000
         };
         if (typeof config.body !== "undefined") requestOptions.body = config.body;
         $task.fetch(requestOptions).then((response) => {
