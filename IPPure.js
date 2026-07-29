@@ -132,10 +132,8 @@ async function collectDatabases(ip, discovery) {
             : requestJson(`${IPAPI_URL}?q=${pathIP}`, { node: "DIRECT" }),
         ipinfo: requestJson(`https://ipinfo.io/widget/demo/${pathIP}`, { node: "DIRECT" }),
         scamalytics: requestScamalytics(pathIP),
-        abuseipdb: requestBackendJson(`${IPQUALITY_BACKEND}/${pathIP}?db=abuseipdb`),
         ip2locationFull: requestBackendJson(`${IPQUALITY_BACKEND}/${pathIP}?db=ip2location`),
-        ip2location: requestText(`https://www.ip2location.io/${pathIP}`, { node: "DIRECT", timeout: 5000 }),
-        dbip: requestText(`https://db-ip.com/${pathIP}`, { node: "DIRECT", timeout: 5000 }),
+        ip2location: requestText(`https://www.ip2location.io/${pathIP}`, { node: "DIRECT", timeout: 5000 })
     };
 
     const keys = Object.keys(tasks);
@@ -238,7 +236,6 @@ function databaseIPMismatch(key, value, expectedIP) {
         ipapi: ["ip"],
         ipinfo: ["data.ip"],
         scamalytics: ["ip"],
-        abuseipdb: ["data.ipAddress"],
         ip2locationFull: ["ip"],
     };
     const candidates = paths[key] || [];
@@ -369,12 +366,10 @@ function buildTypes(data) {
     const ipinfo = data.ipinfo && data.ipinfo.data ? data.ipinfo.data : null;
     const ipapi = data.ipapi;
     const ip2 = getIp2location(data);
-    const abuse = data.abuseipdb && data.abuseipdb.data ? data.abuseipdb.data : null;
     return [
         typeRow('<span style="color:#64D2FF">IPinfo</span>', valueAt(ipinfo, "asn.type")),
         typeRow('<span style="color:#64D2FF">ipapi</span>', valueAt(ipapi, "asn.type")),
         typeRow('<span style="color:#64D2FF">IP2Location</span>', ip2 && ip2.usage_type),
-        typeRow('<span style="color:#64D2FF">AbuseIPDB</span>', abuse && abuse.usageType),
     ].filter((row) => row.usage);
 }
 
@@ -393,8 +388,6 @@ function buildRisks(data) {
         ? data.scamalytics.scamalytics
         : null;
     const scamScore = numberOrNull(scam && scam.scamalytics_score);
-    const abuseScore = numberOrNull(valueAt(data, "abuseipdb.data.abuseConfidenceScore"));
-    const dbipRisk = parseDbipRisk(data.dbip);
 
     const ippureRisk = scoreRisk(ippureMismatch ? '<span style="color:#64D2FF">IPPure（分流出口）</span>' : '<span style="color:#64D2FF">IPPure</span>', ippureScore, [
         [80, 4, "极高风险"],
@@ -417,16 +410,6 @@ function buildRisks(data) {
         }
         : null;
 
-    const dbipRiskItem = dbipRisk
-        ? {
-            name: '<span style="color:#64D2FF">DB-IP</span>',
-            available: true,
-            severity: dbipRisk === "high" ? 3 : dbipRisk === "medium" ? 2 : 0,
-            label: dbipRisk === "high" ? "高风险" : dbipRisk === "medium" ? "中风险" : "低风险",
-            detail: dbipRisk,
-        }
-        : null;
-
     return [
         ippureRisk,
         ipapiRisk,
@@ -440,13 +423,7 @@ function buildRisks(data) {
             [60, 3, "高风险"],
             [20, 2, "中风险"],
             [0, 0, "低风险"],
-        ]),
-        scoreRisk('<span style="color:#64D2FF">AbuseIPDB</span>', abuseScore, [
-            [75, 4, "建议封禁"],
-            [25, 3, "高风险"],
-            [0, 0, "低风险"],
-        ]),
-        dbipRiskItem
+        ])
     ].filter((item) => item && item.available);
 }
 
@@ -501,12 +478,6 @@ function getIp2location(data) {
         as_info: { as_usage_type: null },
         _fallback: true,
     };
-}
-
-function parseDbipRisk(html) {
-    if (!html) return "";
-    const match = String(html).match(/Estimated threat level for this IP address is\s*<span[^>]*>\s*([^<\s]+)/i);
-    return match ? String(match[1]).toLowerCase() : "";
 }
 
 function scoreRisk(name, score, thresholds) {
