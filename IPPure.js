@@ -266,32 +266,58 @@ function render(ip, data) {
     const displayNodeName = truncateText(nodeName, 30);
     const displayIP = maskIPAddress(ip);
 
-    const html = [
+    const htmlParts = [
         '<div style="font-family:-apple-system,BlinkMacSystemFont;font-size:14px;line-height:1.5;text-align:left;overflow-wrap:anywhere">',
         '<div style="font-size:18px;line-height:18px">&nbsp;</div>',
         `<div style="color:#64D2FF;font-size:16px;margin-bottom:16px">${escapeHtml(displayNodeName)}</div>`,
         `<div style="margin-bottom:16px"><div style="font-size:14px;font-weight:800;line-height:1.15;letter-spacing:0.2px">${escapeHtml(displayIP)}</div></div>`,
         section("基础信息", locationInfo),
-        section("IP 类型属性", renderTypeList(types)),
-        section("风险评分", renderRiskList(risks)),
-        "</div>",
-    ].join("");
+        section("IP 类型属性", renderTypeList(types))
+    ];
+
+    if (risks && risks.length > 0) {
+        htmlParts.push(section("风险评分", renderRiskList(risks)));
+    }
+
+    htmlParts.push("</div>");
 
     $done({
         title: "\u200B",
-        htmlMessage: html,
+        htmlMessage: htmlParts.join(""),
         icon: "shield.lefthalf.filled",
         "title-color": titleColor,
     });
 }
 
+// 提取并纯化纯 AS 编号（例如从 "AS13335 Cloudflare, Inc." 中只保留 "AS13335"）
+function extractAsnCode(rawText) {
+    if (!rawText) return "";
+    const match = String(rawText).match(/AS\d+/i);
+    return match ? match[0].toUpperCase() : "";
+}
+
 function buildLocationInfo(geoData, data) {
+    const ipinfo = data && data.ipinfo && data.ipinfo.data ? data.ipinfo.data : null;
+    const ipapi = data && data.ipapi ? data.ipapi : null;
+
+    // 优先提取原始 ASN 数据字符串
+    let rawAsn = cleanValue(
+        (geoData && geoData.as) || 
+        valueAt(ipinfo, "asn.asn") || 
+        valueAt(ipinfo, "org") || 
+        (valueAt(ipapi, "asn.asn") ? `AS${valueAt(ipapi, "asn.asn")}` : "") || 
+        valueAt(data, "ippure.asn")
+    );
+
+    // 正则过滤，只截取 ASxxxx 编号
+    let pureAsn = extractAsnCode(rawAsn);
+
     // 优先使用 ip-api.com 的中文解析结果
     if (geoData && geoData.status === "success") {
         const country = cleanValue(geoData.country);
         const regionName = cleanValue(geoData.regionName);
         const city = cleanValue(geoData.city);
-        const isp = cleanValue(geoData.isp) || cleanValue(geoData.org) || cleanValue(geoData.as);
+        const isp = cleanValue(geoData.isp) || cleanValue(geoData.org);
 
         const locArr = [];
         if (country) locArr.push(country);
@@ -300,17 +326,16 @@ function buildLocationInfo(geoData, data) {
 
         const locText = locArr.join(" - ") || "未知位置";
         const ispText = isp || "未知运营商";
+        const displayAsn = pureAsn || "未知 ASN";
 
         return '<div style="margin-bottom:11px">'
             + `<div style="font-weight:700"><span style="color:#64D2FF">位置：</span>${escapeHtml(locText)}</div>`
             + `<div style="margin-top:2px;font-size:12px;line-height:1.5"><span style="color:#64D2FF;font-weight:700">运营商：</span>${escapeHtml(ispText)}</div>`
+            + `<div style="margin-top:2px;font-size:12px;line-height:1.5"><span style="color:#64D2FF;font-weight:700">ASN：</span>${escapeHtml(displayAsn)}</div>`
             + "</div>";
     }
 
     // 备用方案：若 ip-api.com 失败，从 ipinfo / ipapi 中兜底提取
-    const ipinfo = data && data.ipinfo && data.ipinfo.data ? data.ipinfo.data : null;
-    const ipapi = data && data.ipapi ? data.ipapi : null;
-
     const country = cleanValue(
         valueAt(ipinfo, "country_name") || 
         valueAt(ipinfo, "country") || 
@@ -324,14 +349,16 @@ function buildLocationInfo(geoData, data) {
         valueAt(ipapi, "asn.org")
     );
 
-    if (country || city || isp) {
+    if (country || city || isp || pureAsn) {
         const locArr = [country, city].filter(Boolean);
         const locText = locArr.join(" - ") || "未知位置";
         const ispText = isp || "未知运营商";
+        const displayAsn = pureAsn || "未知 ASN";
 
         return '<div style="margin-bottom:11px">'
             + `<div style="font-weight:700"><span style="color:#64D2FF">位置：</span>${escapeHtml(locText)}</div>`
             + `<div style="margin-top:2px;font-size:12px;line-height:1.5"><span style="color:#64D2FF;font-weight:700">运营商：</span>${escapeHtml(ispText)}</div>`
+            + `<div style="margin-top:2px;font-size:12px;line-height:1.5"><span style="color:#64D2FF;font-weight:700">ASN：</span>${escapeHtml(displayAsn)}</div>`
             + "</div>";
     }
 
@@ -400,7 +427,6 @@ function buildRisks(data) {
         }
         : null;
 
-    // 仅保留可用（即接口正常返回了有效数据）的项，未返回数据的接口将自动静默隐藏
     return [
         ippureRisk,
         ipapiRisk,
@@ -532,7 +558,7 @@ function typeRow(name, usage) {
 
 function renderRiskList(rows) {
     const available = rows.filter((row) => row && row.available);
-    if (!available.length) return mutedLine("本次没有可验证的风险评分");
+    if (!available.length) return "";
     return available.map((row) => {
         const color = row.severity === null ? "#0A84FF" : riskColor(row.severity);
         return '<div style="margin-bottom:9px">'
