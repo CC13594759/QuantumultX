@@ -57,8 +57,10 @@ host, temuchat-file.temu.com, direct
 host, thtk-us.seller.temu.com, direct
 host, agentseller-eu.temu.com, direct
 host, agentseller-us.temu.com, direct
+host, agentseller.temu.com, direct
 host-suffix, kuajingmaihuo.com, direct
-host-suffix, agentseller.temu.com, direct
+host, speed.cloudflare.com, direct
+host, bestcf.cmliussss.hidns.vip, direct
 
 # 番茄小说去广告
 host-wildcard, *webcast-sign.douyinpic.com, reject
@@ -242,6 +244,9 @@ host-suffix, gdtimg.cn, reject
 host-suffix, gdtimg.com, reject
 host-suffix, get.s-onetag.com, reject
 host-suffix, go.ezodn.com, reject
+host-suffix, go.mayzaent.com,reject
+host-suffix, mc.yandex.ru,reject
+host-suffix, zoom.us,reject
 host-suffix, go.mnaspm.com, reject
 host-suffix, go.xlivesex.com, reject
 host-suffix, go.xxxvjmp.com, reject
