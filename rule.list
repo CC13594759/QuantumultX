@@ -79,6 +79,12 @@ host-suffix, pglstatp-toutiao.com, reject
 host-suffix, byteorge.com, reject
 host-suffix, bytegoofy.com, reject
 host-suffix, bytedance.com, reject
+host, i.snssdk.com, reject
+host, i-lq.snssdk.com, reject
+host, mcs.snssdk.com, reject
+host, tnc3-alisc1.snssdk.com, reject
+host, tnc3-aliec2.snssdk.com, reject
+host, is.snssdk.com, reject
 
 # 红果去广告
 host-wildcard, *ad.zijie*, reject
