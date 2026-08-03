@@ -1,1 +1,2 @@
 # QuantumultX
+TGÐ¡×ê·ç
