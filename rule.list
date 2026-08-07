@@ -1,3 +1,6 @@
+# proxy
+host-suffix, ibyteimg.com, proxy
+
 # 直连
 ip-cidr, 10.0.0.0/8, direct
 ip-cidr, 100.64.0.0/10, direct
@@ -41,9 +44,9 @@ ip-cidr, 59.82.240.0/21, direct
 ip-cidr, 59.82.248.0/22, direct
 ip-cidr, 72.254.0.0/16, direct
 ip-cidr, 8.208.0.0/12, direct
-host-suffix, ibyteimg.com, proxy
 host-suffix, zjcdn.com, direct
 host, api-play.amemv.com, direct
+host-suffix, ecombdapi.com, direct
 host-suffix, bgm.tv, direct
 host-suffix, dl.kwcdn.com, direct
 host-suffix, static.kwcdn.com, direct
@@ -82,6 +85,7 @@ host-suffix, pglstatp-toutiao.com, reject
 host-suffix, byteorge.com, reject
 host-suffix, bytegoofy.com, reject
 host-suffix, bytedance.com, reject
+host-suffix, zijieapi.com, reject
 host, i.snssdk.com, reject
 host, i-lq.snssdk.com, reject
 host, mcs.snssdk.com, reject
