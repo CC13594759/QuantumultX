@@ -45,9 +45,7 @@ ip-cidr, 59.82.248.0/22, direct
 ip-cidr, 72.254.0.0/16, direct
 ip-cidr, 8.208.0.0/12, direct
 host-suffix, zjcdn.com, direct
-host, api-play.amemv.com, direct
 host-suffix, ecombdapi.com, direct
-host-suffix, bgm.tv, direct
 host-suffix, dl.kwcdn.com, direct
 host-suffix, static.kwcdn.com, direct
 host-suffix, aimg.kwcdn.com, direct
@@ -104,10 +102,6 @@ host-wildcard, *lf.fqnovel.com, reject
 
 # 去掉农行vpn检测
 host-suffix, msmp.abchina.com.cn, reject
-
-# Yandex
-host-suffix, st.yandexadexchange.net, reject
-host-suffix, ads.yandex.com, reject
 
 # 拼多多
 host-suffix, sdk.1rtb.net, reject
