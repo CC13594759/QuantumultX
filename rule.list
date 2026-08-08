@@ -46,6 +46,10 @@ ip-cidr, 72.254.0.0/16, direct
 ip-cidr, 8.208.0.0/12, direct
 host-suffix, zjcdn.com, direct
 host-suffix, ecombdapi.com, direct
+host-suffix, xsgtvacct.com, direct
+host-suffix, bfcdnbf.com, direct
+host-suffix, gslbdns.com, direct
+host-suffix, pstatp.com, direct
 host-suffix, dl.kwcdn.com, direct
 host-suffix, static.kwcdn.com, direct
 host-suffix, aimg.kwcdn.com, direct
