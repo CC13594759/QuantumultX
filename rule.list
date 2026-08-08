@@ -74,7 +74,7 @@ host-suffix, p6-ad-sign.byteimg.com, reject
 host-suffix, p9-ad-sign.byteimg.com, reject
 host-suffix, i.snssdk.com, reject
 host-suffix, i-lq.snssdk.com, reject
-host-suffix-suffix, zijieapi.com, reject
+host-suffix, zijieapi.com, reject
 host-suffix, activity-ag.awemeughun.com, reject
 host-suffix, mcs.snssdk.com, reject
 host-suffix, tnc3-alisc1.snssdk.com, reject
@@ -93,7 +93,7 @@ host-suffix, byteorge.com, reject
 host-suffix, bytegoofy.com, reject
 host-suffix, bytedance.com, reject
 # 番茄小说福利页
-host, lf-sourcecdn-tos.bytegecko.com, direct
+host-suffix,, lf-sourcecdn-tos.bytegecko.com, direct
 
 # 红果去广告
 host-wildcard, *ad.zijie*, reject
