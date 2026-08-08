@@ -69,31 +69,31 @@ host-suffix, speed.cloudflare.com, direct
 host-suffix, bestcf.cmliussss.hidns.vip, direct
 
 # 番茄小说去广告
-host-wildcard, *webcast-sign.douyinpic.com, reject
-host-wildcard, *sourcecdn.bytegecko.com, reject
-host-wildcard, *developer.bytemaimg.com, reject
-host-wildcard, *applog.fqnovel.com, reject
-host-wildcard, *misc.fqnovel.com, reject
-host-wildcard, *lq.fqnovel.com, reject
-host-wildcard, *novelapp.ixigua.com, reject
-host-wildcard, *default.ixigua.com, reject
-host-suffix, lf3-reading.fqnovelpic.com, reject
 host-suffix, dig.bdurl.net, reject
+host-suffix, p6-ad-sign.byteimg.com, reject
+host-suffix, p9-ad-sign.byteimg.com, reject
+host-suffix, i.snssdk.com, reject
+host-suffix, i-lq.snssdk.com, reject
+host-suffix-suffix, zijieapi.com, reject
 host-suffix, activity-ag.awemeughun.com, reject
+host-suffix, mcs.snssdk.com, reject
+host-suffix, tnc3-alisc1.snssdk.com, reject
+host-suffix, security-lq.snssdk.com, reject
+host-suffix, tnc3-aliec2.snssdk.com, reject
+host-suffix, is.snssdk.com, reject
 host-suffix, msync-im1-vip6-std.easemob.com, reject
 host-suffix, apd-pcdnwxlogin.teg.tencent-cloud.net, reject
+host-suffix, api.iegadp.qq.com, reject
 host-suffix, sf3-ttcdn-tos.pstatp.com, reject
 host-suffix, pglstatp-toutiao.com, reject
+host-wildcard, *default.ixigua.com, reject
+host-suffix, v6-novelapp.ixigua.com, reject
+host-wildcard, *novelapp.ixigua.com, reject
 host-suffix, byteorge.com, reject
 host-suffix, bytegoofy.com, reject
 host-suffix, bytedance.com, reject
-host-suffix, zijieapi.com, reject
-host, i.snssdk.com, reject
-host, i-lq.snssdk.com, reject
-host, mcs.snssdk.com, reject
-host, tnc3-alisc1.snssdk.com, reject
-host, tnc3-aliec2.snssdk.com, reject
-host, is.snssdk.com, reject
+# 番茄小说福利页
+host, lf-sourcecdn-tos.bytegecko.com, direct
 
 # 红果去广告
 host-wildcard, *ad.zijie*, reject
