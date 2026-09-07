@@ -41,6 +41,8 @@ ip-cidr, 59.82.240.0/21, direct
 ip-cidr, 59.82.248.0/22, direct
 ip-cidr, 72.254.0.0/16, direct
 ip-cidr, 8.208.0.0/12, direct
+host-suffix, qq.com, direct
+host-suffix, nodeloc.com, direct
 host-suffix, intlgame.com, direct
 host-suffix, sgameglobal.com, direct
 host-suffix, honorofkings.com, direct
