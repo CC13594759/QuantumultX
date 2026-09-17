@@ -41,9 +41,11 @@ ip-cidr, 59.82.240.0/21, direct
 ip-cidr, 59.82.248.0/22, direct
 ip-cidr, 72.254.0.0/16, direct
 ip-cidr, 8.208.0.0/12, direct
+host-suffix, qq.com, direct
 host-suffix, intlgame.com, direct
 host-suffix, sgameglobal.com, direct
 host-suffix, honorofkings.com, direct
+host, download.sgameglobal.com, proxy
 host-suffix, zjcdn.com, direct
 host-suffix, qishui.com, direct
 host-suffix, ecombdapi.com, direct
@@ -67,7 +69,7 @@ host-suffix, kuajingmaihuo.com, direct
 host-suffix, speed.cloudflare.com, direct
 host-suffix, bestcf.cmliussss.hidns.vip, direct
 
-# 番茄小说去广告
+# 番茄小说广告
 host-suffix, dig.bdurl.net, reject
 host-suffix, p6-ad-sign.byteimg.com, reject
 host-suffix, p9-ad-sign.byteimg.com, reject
@@ -92,7 +94,7 @@ host-suffix, byteorge.com, reject
 host-suffix, bytegoofy.com, reject
 host-suffix, bytedance.com, reject
 
-# 红果去广告
+# 红果广告
 host-wildcard, *ad.zijie*, reject
 host-wildcard, *reading-ad*, reject
 host-wildcard, *lf.zijie*, reject
@@ -106,7 +108,7 @@ host-suffix, msmp.abchina.com.cn, reject
 host-suffix, sdk.1rtb.net, reject
 host-suffix, titan.pinduoduo.com, reject
 
-# 去国内app开屏广告
+# 国内app开屏广告
 host-suffix, 1sapp.com, reject
 host-suffix, ad.10010.com, reject
 host-suffix, aa.online-metrix.net, reject
