@@ -67,7 +67,7 @@ host-suffix, agentseller-eu.temu.com, direct
 host-suffix, agentseller-us.temu.com, direct
 host-suffix, kuajingmaihuo.com, direct
 host-suffix, speed.cloudflare.com, direct
-host-suffix, bestcf.cmliussss.hidns.vip, direct
+host-suffix, challenges.cloudflare.com, direct
 
 # 番茄小说广告
 host-suffix, dig.bdurl.net, reject
