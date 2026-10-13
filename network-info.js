@@ -4,7 +4,12 @@ const $ = new Env(NAME)
 // 1. 参数解析优化
 let arg = {}
 if (typeof $argument !== 'undefined') {
-  arg = Object.fromEntries($argument.split('&').map(item => item.split('=')))
+  for (const item of $argument.split('&')) {
+    const i = item.indexOf('=')
+    if (i > 0) {
+      try { arg[item.slice(0, i)] = decodeURIComponent(item.slice(i + 1)) } catch (e) { arg[item.slice(0, i)] = item.slice(i + 1) }
+    }
+  }
 }
 arg = { ...arg, ...$.getjson(NAME, {}) }
 
@@ -55,19 +60,19 @@ let content = ''
   LAN = (LAN_IPv4 || LAN_IPv6) ? ['LAN:', LAN_IPv4, maskIP(LAN_IPv6)].filter(Boolean).join(' ') + '\n\n' : ''
   SSID = SSID ? `SSID: ${SSID}\n\n` : ''
 
-  // 3. 完全并发网络请求 (核心加速)
+  // 3. 先取代理列表，再并发网络请求 (核心加速)
+  //    注意：PROXIES 必须传给 getDirectRequestInfo/getProxyRequestInfo，
+  //    否则 Stash 下无法从 provider 反查代理 IP
   const isIPv6Enable = arg.IPv6 == 1
-  const [proxiesRes, directInfo, proxyInfo, directV6, proxyV6] = await Promise.all([
-    getProxies(),
-    getDirectRequestInfo(),
-    getProxyRequestInfo(),
+  const PROXIES = (await getProxies()).PROXIES || []
+  const [directInfo, proxyInfo, directV6, proxyV6] = await Promise.all([
+    getDirectRequestInfo(PROXIES),
+    getProxyRequestInfo(PROXIES),
     isIPv6Enable ? getDirectInfoIPv6() : Promise.resolve({}),
     isIPv6Enable ? getProxyInfoIPv6() : Promise.resolve({})
   ])
-
-  const PROXIES = proxiesRes.PROXIES || []
   let { CN_IP = '', CN_INFO = '', CN_POLICY = '' } = directInfo || {}
-  let { PROXY_IP = '', PROXY_INFO = '', PROXY_PRIVACY = '', PROXY_POLICY = '', ENTRANCE_IP = '' } = proxyInfo || {}
+  let { PROXY_IP = '', PROXY_INFO = '', PROXY_POLICY = '', ENTRANCE_IP = '' } = proxyInfo || {}
   let CN_IPv6 = directV6?.CN_IPv6 || ''
   let PROXY_IPv6 = proxyV6?.PROXY_IPv6 || ''
 
@@ -87,8 +92,6 @@ let content = ''
   }
 
   // 4. 处理入口 IP 与 落地 IP
-  if (arg.PRIVACY == '1' && PROXY_PRIVACY) PROXY_PRIVACY = `\n${PROXY_PRIVACY}`
-
   let ENTRANCE = ''
   if (ENTRANCE_IP) {
     const { IP: resolvedIP } = await resolveDomain(ENTRANCE_IP)
@@ -98,8 +101,8 @@ let content = ''
   if (ENTRANCE_IP && ENTRANCE_IP !== PROXY_IP) {
     let [{ CN_INFO: ENTRANCE_INFO1 = '', isCN = false } = {}, { PROXY_INFO: ENTRANCE_INFO2 = '' } = {}] =
       await Promise.all([
-        getDirectInfo(ENTRANCE_IP, arg.DOMESTIC_IPv4),
-        getProxyInfo(ENTRANCE_IP, arg.LANDING_IPv4),
+        getDirectInfo(ENTRANCE_IP),
+        getProxyInfo(ENTRANCE_IP),
       ])
     if (ENTRANCE_INFO1 && isCN) ENTRANCE = `入口: ${maskIP(ENTRANCE_IP) || '-'}\n${maskAddr(ENTRANCE_INFO1)}`
     if (ENTRANCE_INFO2) {
@@ -128,7 +131,7 @@ let content = ''
   
   content = `${SSID}${LAN}${CN_POLICY}IP: ${maskIP(CN_IP) || '-'}${CN_IPv6}${maskAddr(
     CN_INFO
-  )}\n\n${ENTRANCE}落地 IP: ${maskIP(PROXY_IP) || '-'}${PROXY_IPv6}${maskAddr(PROXY_INFO)}${PROXY_PRIVACY}`
+  )}\n\n${ENTRANCE}落地 IP: ${maskIP(PROXY_IP) || '-'}${PROXY_IPv6}${maskAddr(PROXY_INFO)}`
   
   if (!isInteraction()) {
     content += `\n执行时间: ${new Date().toTimeString().split(' ')[0]}`
@@ -208,15 +211,15 @@ async function getEntranceInfo() {
 
 async function getDirectRequestInfo(PROXIES = []) {
   const [{ CN_IP, CN_INFO }, { POLICY }] = await Promise.all([
-    getDirectInfo(undefined, arg.DOMESTIC_IPv4),
+    getDirectInfo(),
     getRequestInfo(new RegExp(`cip\\.cc|for${keyb}\\.${keya}${bay}\\.cn|rmb\\.${keyc}${keyd}\\.com\\.cn|api-v3\\.${keya}${bay}\\.cn|ipservice\\.ws\\.126\\.net|api\\.bilibili\\.com|api\\.live\\.bilibili\\.com|myip\\.ipip\\.net|ip\\.ip233\\.cn|ua${keye}\\.wo${keyf}x\\.cn|ip\\.im|ips\\.market\\.alicloudapi\\.com|api\\.ip\\.plus|ip\\.qtfm\\.cn|dashi\\.163\\.com|api\\.zhuishushenqi\\.com|admin-app\\.edifier\\.com`), PROXIES)
   ])
   return { CN_IP, CN_INFO, CN_POLICY: POLICY }
 }
 
 async function getProxyRequestInfo(PROXIES = []) {
-  const [{ PROXY_IP, PROXY_INFO, PROXY_PRIVACY }, result] = await Promise.all([
-    getProxyInfo(undefined, arg.LANDING_IPv4),
+  const [{ PROXY_IP, PROXY_INFO }, result] = await Promise.all([
+    getProxyInfo(),
     ($.isSurge() || $.isStash())
       ? getRequestInfo(/ipinfo\.io|ip-score\.com|ipwhois\.app|ip-api\.com|api-ipv4\.ip\.sb/, PROXIES)
       : (($.isQuanX() || $.isLoon()) ? getEntranceInfo() : Promise.resolve({}))
@@ -224,7 +227,6 @@ async function getProxyRequestInfo(PROXIES = []) {
   return {
     PROXY_IP,
     PROXY_INFO,
-    PROXY_PRIVACY,
     PROXY_POLICY: result?.POLICY || '',
     ENTRANCE_IP: result?.IP || '',
   }
@@ -255,7 +257,7 @@ async function getRequestInfo(regexp, PROXIES = []) {
   return { POLICY, IP }
 }
 
-async function getDirectInfo(ip, provider) {
+async function getDirectInfo(ip) {
   let CN_IP = '', CN_INFO = '', isCN = false
   try {
     const res = await http({
@@ -288,8 +290,8 @@ async function getDirectInfoIPv6() {
   return { CN_IPv6 }
 }
 
-async function getProxyInfo(ip, provider) {
-  let PROXY_IP = '', PROXY_INFO = '', PROXY_PRIVACY = ''
+async function getProxyInfo(ip) {
+  let PROXY_IP = '', PROXY_INFO = ''
   try {
     const p = ip ? `/${encodeURIComponent(ip)}` : ''
     const res = await http({
@@ -306,7 +308,7 @@ async function getProxyInfo(ip, provider) {
       arg.ASN == 1 ? ['ASN:', body?.as || '-'].filter(Boolean).join(' ') : undefined,
     ].filter(Boolean).join('\n')
   } catch (e) {}
-  return { PROXY_IP, PROXY_INFO: simplifyAddr(PROXY_INFO), PROXY_PRIVACY }
+  return { PROXY_IP, PROXY_INFO: simplifyAddr(PROXY_INFO) }
 }
 
 async function getProxyInfoIPv6(ip) {
@@ -326,14 +328,18 @@ async function getProxyInfoIPv6(ip) {
 async function http(opt = {}) {
   const TIMEOUT = parseFloat(opt.timeout || arg.TIMEOUT || 2.5)
   const timeoutMs = TIMEOUT * 1000
-
-  return Promise.race([
-    $.http.get(opt),
-    new Promise((_, reject) => setTimeout(() => reject(new Error('HTTP TIMEOUT')), timeoutMs))
-  ]).catch(err => {
+  let timer = null
+  try {
+    return await Promise.race([
+      $.http.get(opt),
+      new Promise((_, reject) => { timer = setTimeout(() => reject(new Error('HTTP TIMEOUT')), timeoutMs) })
+    ])
+  } catch (err) {
     $.logErr(`HTTP请求超时或失败: ${opt.url}`)
     return { body: '' }
-  })
+  } finally {
+    if (timer) clearTimeout(timer)
+  }
 }
 
 // 通用工具函数
@@ -368,7 +374,13 @@ function getflag(e) {
 
 function parseQueryString(url) {
   if (!url || !url.includes('?')) return {}
-  return Object.fromEntries(new URLSearchParams(url.split('?')[1]))
+  const out = {}
+  for (const pair of url.split('?')[1].split('&')) {
+    const i = pair.indexOf('=')
+    if (i < 0) continue
+    try { out[decodeURIComponent(pair.slice(0, i))] = decodeURIComponent(pair.slice(i + 1)) } catch (e) {}
+  }
+  return out
 }
 
 const DOMAIN_RESOLVERS = {

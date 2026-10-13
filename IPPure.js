@@ -189,21 +189,30 @@ async function requestIppure() {
                 timeout: 5000,
             });
             if (!normalizeIPAddress(value && value.ip)) {
-                throw new Error("未返回可核验的出口 IP");
+                throw nonRetryable("未返回可核验的出口 IP");
             }
             const fraudScore = numberOrNull(value.fraudScore);
             if (fraudScore === null || fraudScore < 0 || fraudScore > 100) {
-                throw new Error("风险评分无效");
+                throw nonRetryable("风险评分无效");
             }
             return value;
         } catch (error) {
             lastError = error;
+            // 数据校验失败重试无意义，直接抛；只重试网络/HTTP 错误
+            if (error && error.nonRetryable) throw error;
             if (attempt < 3) {
                 console.log(`[WARN] IPPure 第 ${attempt} 次请求失败，正在重试: ${errorMessage(error)}`);
             }
         }
     }
     throw lastError || new Error("IPPure 请求失败");
+}
+
+// 标记无需重试的错误（数据校验类）
+function nonRetryable(message) {
+    const error = new Error(message);
+    error.nonRetryable = true;
+    return error;
 }
 
 async function requestScamalytics(pathIP) {
@@ -237,6 +246,7 @@ function databaseIPMismatch(key, value, expectedIP) {
         ipinfo: ["data.ip"],
         scamalytics: ["ip"],
         ip2locationFull: ["ip"],
+        geoIpApi: ["query"],
     };
     const candidates = paths[key] || [];
     let reported = "";
@@ -493,10 +503,6 @@ function scoreRisk(name, score, thresholds) {
             };
         }
     }
-    return null;
-}
-
-function unavailableRisk(name) {
     return null;
 }
 
