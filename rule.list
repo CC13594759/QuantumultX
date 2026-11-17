@@ -31,6 +31,7 @@ ip-cidr, 163.181.0.0/16, direct
 ip-cidr, 170.33.0.0/16, direct
 ip-cidr, 198.11.128.0/18, direct
 ip-cidr, 205.204.96.0/19, direct
+host-suffix, ecombdapi.com, direct
 host-suffix, intlgame.com, direct
 host-suffix, sgameglobal.com, direct
 host-suffix, honorofkings.com, direct
