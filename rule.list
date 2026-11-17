@@ -266,7 +266,6 @@ host-suffix, api-access.pangolin-sdk-toutiao5.com, reject
 host-suffix, api-adservices.apple.com, reject
 host-suffix, api.adapi.co.kr, reject
 host-suffix, api.cloudmobi.net, reject
-host-suffix, api.snssdk.com, reject
 host-suffix, api.tdp.u7u9.com, reject
 host-suffix, api.tongjiniao.com, reject
 host-suffix, api2.amplitude.com, reject
@@ -398,7 +397,6 @@ host-suffix, gdtimg.com, reject
 host-suffix, gdtqq.cn, reject
 host-suffix, gdtrbrsyziwmw.website, reject
 host-suffix, gdtsxk.dedoles.pl, reject
-host-suffix, gecko.snssdk.com, reject
 host-suffix, gepush.com, reject
 host-suffix, get.s-onetag.com, reject
 host-suffix, getui.com, reject
