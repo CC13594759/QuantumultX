@@ -52,11 +52,13 @@ host-suffix, kuajingmaihuo.com, direct
 host-suffix, challenges.cloudflare.com, direct
 
 # 字节
+host-keyword, dig.zjurl, reject
 host-suffix, activity-ag.awemeughun.com, reject
 host-suffix, api.iegadp.qq.com, reject
 host-suffix, bytegoofy.com, reject
 host-suffix, byteorge.com, reject
 host-suffix, dig.bdurl.net, reject
+host-suffix, ib.snssdk.com, reject
 host-suffix, p3-developer-sign.bytemaimg.com, reject
 host-suffix, p3-developer.bytemaimg.com, reject
 host-suffix, p6-ad-sign.byteimg.com, reject
@@ -119,6 +121,7 @@ host-suffix, ad.gt, reject
 host-suffix, ad.hicloud.com, reject
 host-suffix, ad.kuaishou.com, reject
 host-suffix, ad.meizu.com, reject
+host-suffix, ad.oceanengine.com, reject
 host-suffix, ad.oppomobile.com, reject
 host-suffix, ad.partner.gifshow.com, reject
 host-suffix, ad.snssdk.com, reject
@@ -776,6 +779,7 @@ host-suffix, yeszrgtanxjup.website, reject
 host-suffix, yunxish.com, reject
 host-suffix, zgdtldkyevtdw.space, reject
 host-suffix, zhanzhang.toutiao.com, reject
+host-suffix, zlink.toutiao.com, reject
 host-suffix, zlsdk.1rtb.net, reject
 host-suffix, zrdezllgdthjb.site, reject
 host-suffix, zz.bdstatic.com, reject
