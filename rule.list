@@ -73,11 +73,11 @@ host-wildcard, *-ad-sign*, reject
 host-wildcard, *ad.zijie*, reject
 host-wildcard, *default.ixigua.com, reject
 host-wildcard, *reading-ad*, reject
-host-wildcard, ads*-normal.zijieapi.com, reject
-host-wildcard, ec*-core-lq.ecombdapi.com, reject
-host-wildcard, ecom*-normal-lq.ecombdapi.com, reject
-host-wildcard, isaas*-normal-lq.ecombdapi.com, reject
-host-wildcard, minigame*-normal.zijieapi.com, reject
+host-wildcard, ads*normal*zijieapi.com, reject
+host-wildcard, ec*core*ecombdapi.com, reject
+host-wildcard, ecom*normal*ecombdapi.com, reject
+host-wildcard, isaas*normal*ecombdapi.com, reject
+host-wildcard, minigame*normal.zijieapi.com, reject
 
 # 去掉农行vpn检测
 host-suffix, msmp.abchina.com.cn, reject
