@@ -51,23 +51,32 @@ host-suffix, agentseller-us.temu.com, direct
 host-suffix, kuajingmaihuo.com, direct
 host-suffix, challenges.cloudflare.com, direct
 
-# 番茄小说广告
+# 番红茄果广告
+host-suffix, activity-ag.awemeughun.com, reject
+host-suffix, api.iegadp.qq.com, reject
+host-suffix, bytegoofy.com, reject
+host-suffix, byteorge.com, reject
 host-suffix, dig.bdurl.net, reject
+host-suffix, p3-developer-sign.bytemaimg.com, reject
+host-suffix, p3-developer.bytemaimg.com, reject
 host-suffix, p6-ad-sign.byteimg.com, reject
 host-suffix, p9-ad-sign.byteimg.com, reject
-host-suffix, activity-ag.awemeughun.com, reject
-host-suffix, tnc3-alisc1.snssdk.com, reject
-host-suffix, tnc3-aliec2.snssdk.com, reject
-host-suffix, api.iegadp.qq.com, reject
 host-suffix, pglstatp-toutiao.com, reject
-host-wildcard, *default.ixigua.com, reject
-host-suffix, byteorge.com, reject
-host-suffix, bytegoofy.com, reject
-
-# 红果广告
-host-wildcard, *ad.zijie*, reject
-host-wildcard, *reading-ad*, reject
+host-suffix, praisewindow.ugsdk.cn, reject
+host-suffix, tnc3-aliec2.snssdk.com, reject
+host-suffix, tnc3-alisc1.snssdk.com, reject
+host-suffix, zlink.ugsdk.cn, reject
+host, praisewindow-sinfonlinea.ugsdk.cn, reject
+host, www.chengzijianzhan.com, reject
 host-wildcard, *-ad-sign*, reject
+host-wildcard, *ad.zijie*, reject
+host-wildcard, *default.ixigua.com, reject
+host-wildcard, *reading-ad*, reject
+host-wildcard, ads*-normal.zijieapi.com, reject
+host-wildcard, ec*-core-lq.ecombdapi.com, reject
+host-wildcard, ecom*-normal-lq.ecombdapi.com, reject
+host-wildcard, isaas*-normal-lq.ecombdapi.com, reject
+host-wildcard, minigame*-normal.zijieapi.com, reject
 
 # 去掉农行vpn检测
 host-suffix, msmp.abchina.com.cn, reject
