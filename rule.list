@@ -51,7 +51,7 @@ host-suffix, agentseller-us.temu.com, direct
 host-suffix, kuajingmaihuo.com, direct
 host-suffix, challenges.cloudflare.com, direct
 
-# 番红茄果广告
+# 字节
 host-suffix, activity-ag.awemeughun.com, reject
 host-suffix, api.iegadp.qq.com, reject
 host-suffix, bytegoofy.com, reject
@@ -63,6 +63,7 @@ host-suffix, p6-ad-sign.byteimg.com, reject
 host-suffix, p9-ad-sign.byteimg.com, reject
 host-suffix, pglstatp-toutiao.com, reject
 host-suffix, praisewindow.ugsdk.cn, reject
+host-suffix, shoppingads.cn, reject
 host-suffix, tnc3-aliec2.snssdk.com, reject
 host-suffix, tnc3-alisc1.snssdk.com, reject
 host-suffix, zlink.ugsdk.cn, reject
@@ -82,8 +83,10 @@ host-wildcard, minigame*-normal.zijieapi.com, reject
 host-suffix, msmp.abchina.com.cn, reject
 
 # 拼多多
+host-suffix, meta.pinduoduo.com, reject
 host-suffix, sdk.1rtb.net, reject
 host-suffix, titan.pinduoduo.com, reject
+host-suffix, xg.pinduoduo.com, reject
 
 # 广告
 host-keyword, -adapi, reject
@@ -418,6 +421,7 @@ host-suffix, ht-cdn.trafficjunky.net, reject
 host-suffix, huaweiad.com, reject
 host-suffix, hubcloud.com.cn, reject
 host-suffix, hubt.pornhub.com, reject
+host-suffix, hudong.alicdn.com, reject
 host-suffix, hwads.hicloud.com, reject
 host-suffix, hylrncjzgdtgi.site, reject
 host-suffix, i.go.sohu.com, reject
