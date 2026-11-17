@@ -79,7 +79,7 @@ host-wildcard, ads*normal*zijieapi.com, reject
 host-wildcard, ec*core*ecombdapi.com, reject
 host-wildcard, ecom*normal*ecombdapi.com, reject
 host-wildcard, isaas*normal*ecombdapi.com, reject
-host-wildcard, minigame*normal.zijieapi.com, reject
+host-wildcard, minigame*normal*zijieapi.com, reject
 
 # 去掉农行vpn检测
 host-suffix, msmp.abchina.com.cn, reject
