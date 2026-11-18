@@ -51,6 +51,9 @@ host-suffix, agentseller-eu.temu.com, direct
 host-suffix, agentseller-us.temu.com, direct
 host-suffix, kuajingmaihuo.com, direct
 host-suffix, challenges.cloudflare.com, direct
+host-suffix, alipay.cn, direct
+host-suffix, taobao.cn, direct
+host-suffix, tbcdn.cn, direct
 
 # 字节
 host-keyword, dig.zjurl, reject
@@ -63,8 +66,6 @@ host-suffix, frontier100-toutiao-lf.fqnovel.com, reject
 host-suffix, ib.snssdk.com, reject
 host-suffix, mercury-sdk.snssdk.com, reject
 host-suffix, mssdk3-normal-hl.zijieapi.com, reject
-host-suffix, open.isnssdk.com, reject
-host-suffix, open.snssdk.com, reject
 host-suffix, p3-developer-sign.bytemaimg.com, reject
 host-suffix, p3-developer.bytemaimg.com, reject
 host-suffix, p6-ad-sign.byteimg.com, reject
@@ -93,8 +94,6 @@ host, ug.snssdk.com, reject
 host, www.chengzijianzhan.com, reject
 host-wildcard, *-ad-sign*, reject
 host-wildcard, *ad.zijie*, reject
-host-wildcard, *default.ixigua.com, reject
-host-wildcard, *novelapp.ixigua.com, reject
 host-wildcard, *reading-ad*, reject
 host-wildcard, ads*normal*zijieapi.com, reject
 host-wildcard, ec*core*ecombdapi.com, reject
@@ -315,7 +314,6 @@ host-suffix, cdn.optmn.cloud, reject
 host-suffix, cdn.pncloudfl.com, reject
 host-suffix, cdn.sekio.top, reject
 host-suffix, cdn.viglink.com, reject
-host-suffix, cdnimg.3g.qq.com, reject
 host-suffix, cdntips.net, reject
 host-suffix, chartboost.com, reject
 host-suffix, chartboosts.com, reject
@@ -448,15 +446,12 @@ host-suffix, hwads.hicloud.com, reject
 host-suffix, hylrncjzgdtgi.site, reject
 host-suffix, i.go.sohu.com, reject
 host-suffix, i.isnssdk.com, reject
-host-suffix, i16-tb.isnssdk.com, reject
 host-suffix, ic.snssdk.com, reject
-host-suffix, ichannel.isnssdk.com, reject
 host-suffix, idfa2.shuzilm.cn, reject
 host-suffix, idouyinvod.com, reject
 host-suffix, igexin.com, reject
 host-suffix, im-x.jd.com, reject
 host-suffix, images.pagechoice.net, reject
-host-suffix, imapi-sg.isnssdk.com, reject
 host-suffix, imasdk.googleapis.com, reject
 host-suffix, img.strpst.com, reject
 host-suffix, img.whhnkj.com, reject
@@ -490,7 +485,6 @@ host-suffix, kadmimage.biz.weibo.com, reject
 host-suffix, kde.qq.com, reject
 host-suffix, kmrcdnretry.service.kugou.com, reject
 host-suffix, kuaishouzt.com, reject
-host-suffix, l.qq.com, reject
 host-suffix, legitimatewandermeek.com, reject
 host-suffix, leiki-doubleclick-proxy.appspot.com, reject
 host-suffix, lf-cdn-tos.bytescm.com, reject
@@ -561,7 +555,6 @@ host-suffix, monsetting.toutiao.com, reject
 host-suffix, mopub-win-us-east.bksn.se, reject
 host-suffix, mopub.com, reject
 host-suffix, mqwvygcrfgdtg.site, reject
-host-suffix, msite.baidu.com, reject
 host-suffix, mssdk.volces.com, reject
 host-suffix, mssp.baidu.com, reject
 host-suffix, mtrace.qq.com, reject
@@ -724,13 +717,9 @@ host-suffix, tnc3-bjlgy.toutiaoapi.com, reject
 host-suffix, toblog.snssdk.com, reject
 host-suffix, toblog.tobsnssdk.com, reject
 host-suffix, toponad.com, reject
-host-suffix, tos.pstatp.com, reject
 host-suffix, tosv.byted.org, reject
 host-suffix, toutiao-frontier.snssdk.com, reject
-host-suffix, toutiao.2haha.com, reject
-host-suffix, toutiao.jxnews.com.cn, reject
 host-suffix, toutiaopage.com, reject
-host-suffix, tpns.tencent.com, reject
 host-suffix, tpstelemetry.tencent.com, reject
 host-suffix, trace.qq.com, reject
 host-suffix, track.sohu.com, reject
