@@ -31,6 +31,7 @@ ip-cidr, 163.181.0.0/16, direct
 ip-cidr, 170.33.0.0/16, direct
 ip-cidr, 198.11.128.0/18, direct
 ip-cidr, 205.204.96.0/19, direct
+host-suffix, douyincdn.com, direct
 host-suffix, ecombdapi.com, direct
 host-suffix, intlgame.com, direct
 host-suffix, sgameglobal.com, direct
@@ -50,7 +51,6 @@ host-suffix, agentseller.temu.com, direct
 host-suffix, agentseller-eu.temu.com, direct
 host-suffix, agentseller-us.temu.com, direct
 host-suffix, kuajingmaihuo.com, direct
-host-suffix, challenges.cloudflare.com, direct
 host-suffix, alipay.cn, direct
 host-suffix, taobao.cn, direct
 host-suffix, tbcdn.cn, direct
