@@ -4,7 +4,6 @@ host-suffix, agentseller-eu.temu.com, direct
 host-suffix, agentseller-us.temu.com, direct
 host-suffix, agentseller.temu.com, direct
 host-suffix, aimg.kwcdn.com, direct
-host-suffix, alipay.cn, direct
 host-suffix, bstatic.kwcdn.com, direct
 host-suffix, dl.kwcdn.com, direct
 host-suffix, douyincdn.com, direct
@@ -18,8 +17,6 @@ host-suffix, kuajingmaihuo.com, direct
 host-suffix, pfs.file.temu.com, direct
 host-suffix, sgameglobal.com, direct
 host-suffix, static.kwcdn.com, direct
-host-suffix, taobao.cn, direct
-host-suffix, tbcdn.cn, direct
 host-suffix, temuchat-api.temu.com, direct
 host-suffix, temuchat-file.temu.com, direct
 host-suffix, thtk-us.seller.temu.com, direct
