@@ -1,4 +1,3 @@
-# 直连
 geoip, cn, direct
 host-suffix, agentseller-eu.temu.com, direct
 host-suffix, agentseller-us.temu.com, direct
@@ -384,7 +383,6 @@ ip-cidr, 87.254.207.0/24, direct
 ip-cidr, 87.82.58.0/24, direct
 ip-cidr, 93.183.14.0/24, direct
 ip-cidr, 93.183.18.0/24, direct
-# 字节
 host, isub.snssdk.com, reject
 host, www.chengzijianzhan.com, reject
 host-keyword, dig.zjurl, reject
@@ -476,14 +474,11 @@ host-suffix, v3-ad.ixigua.com, reject
 host-suffix, xlog-va.byteoversea.com, reject
 host-suffix, xlog-va.musical.ly, reject
 host-suffix, xlog.byteoversea.com, reject
-# 去掉农行vpn检测
 host-suffix, msmp.abchina.com.cn, reject
-# 拼多多
 host-suffix, meta.pinduoduo.com, reject
 host-suffix, sdk.1rtb.net, reject
 host-suffix, titan.pinduoduo.com, reject
 host-suffix, xg.pinduoduo.com, reject
-# 广告
 host, adapi.inlcorp.com, reject
 host, ads-sdk.is.com, reject
 host, adse.kuaishou.com, reject
