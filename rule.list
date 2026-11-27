@@ -94,6 +94,16 @@ host-wildcard, ec*core*ecombdapi.com, reject
 host-wildcard, ecom*normal*ecombdapi.com, reject
 host-wildcard, isaas*normal*ecombdapi.com, reject
 host-wildcard, minigame*normal*zijieapi.com, reject
+host-suffix, i16-tb.isnssdk.com, reject
+host-suffix, ichannel.isnssdk.com, reject
+host-suffix, imapi-sg.isnssdk.com, reject
+host-suffix, log0-misc-hl.amemv.com, reject
+host-suffix, mcs.snssdk.com, reject
+host-suffix, moon.ibytecdn.cn, reject
+host-suffix, mssdk.bytedance.com, reject
+host-suffix, open.isnssdk.com, reject
+host-suffix, tnc3-alisc1.bytedance.com, reject
+host-suffix, tobapplog.tobsnssdk.com, reject
 # 去掉农行vpn检测
 host-suffix, msmp.abchina.com.cn, reject
 # 拼多多
